@@ -17,17 +17,39 @@ dependencies:
 ```crystal
 require "schedule"
 
-# Will print "Hello!" each 3 seconds
-every(3.seconds) do
+# Print "Hello!" each 2 seconds
+Schedule.every(2.seconds) do
   puts "Hello!"
+end
+
+# Set a default exception handler
+Schedule.exception_handler do |ex|
+  puts "Exception recued! #{ex.message}"
+end
+
+# Stop or retry a task
+Schedule.every(100.milliseconds) do
+  begin
+    count += computed_value
+  rescue
+    Schedule.retry
+  end
+
+  Schedule.stop if count >= MAX_VALUE
 end
 ```
 
-TODO: Write usage instructions here
+Scheduled tasks can be isolated having its own runner:
+```crystal
+runner = Schedule::Runner.new
+runner.every(100.milliseconds) do
+  Schedule.stop if condition
+end
 
-## Development
-
-TODO: Write development instructions here
+runner.exception_handler do |ex|
+  puts ex.message
+end
+```
 
 ## Contributing
 
