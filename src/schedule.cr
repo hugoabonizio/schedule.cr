@@ -19,14 +19,17 @@ module Schedule
           next
         rescue ex
           if handler = @@exception_handler
-            case h = handler
-            when Proc(Nil)
-              h.call
-            when Proc(Exception, Nil)
-              h.call(ex)
+            begin
+              case h = handler
+              when Proc(Nil)
+                h.call
+              when Proc(Exception, Nil)
+                h.call(ex)
+              end
+            rescue ex : StopException
+              break
             end
           end
-          break
         end
       end
     end

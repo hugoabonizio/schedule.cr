@@ -1,2 +1,2 @@
 require "spec"
-require "../src/schedule"
+require "../schedule"

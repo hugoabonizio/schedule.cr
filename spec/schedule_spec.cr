@@ -17,6 +17,7 @@ describe Schedule do
     flag2 = 0
     Schedule.exception_handler do
       flag2 += 1
+      Schedule.stop
     end
     flag2.should eq 0
     Schedule.every(0.seconds) do
