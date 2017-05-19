@@ -1,6 +1,6 @@
 # Schedule [![Build Status](https://travis-ci.org/hugoabonizio/schedule.cr.svg?branch=master)](https://travis-ci.org/hugoabonizio/schedule.cr)
 
-**Schedule** is a Crystal shard that provides a clear DSL to write periodic tasks. It has the ability to stop or retry the job whenever is necessary, with proper ways to handle exceptions.
+**Schedule** is a Crystal shard that provides a clear DSL to write periodic tasks. It has the ability to stop or retry the job whenever is necessary, with proper ways to handle exceptions. See usage examples in [examples](https://github.com/hugoabonizio/schedule.cr/tree/master/examples) folder.
 
 ## Installation
 
@@ -39,7 +39,7 @@ Schedule.every(100.milliseconds) do
 end
 ```
 
-Scheduled tasks can be isolated having its own runner:
+#### Scheduled tasks can be isolated having its own runner:
 ```crystal
 runner = Schedule::Runner.new
 runner.every(100.milliseconds) do
@@ -48,6 +48,18 @@ end
 
 runner.exception_handler do |ex|
   puts ex.message
+end
+```
+
+### Flow controw
+
+A task can be stopped or retried using ```Schedule.stop``` and ```Schedule.retry``` respectively.
+
+```crystal
+Schedule.every(10.seconds) do
+  result = try_to_update
+  Schedule.retry if result == -1
+  Schedule.stop if updates >= MAX_COUNT
 end
 ```
 
