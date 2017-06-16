@@ -35,6 +35,35 @@ module Schedule
     end
   end
 
+  def self.after(interval, &block)
+    delay(interval) do
+      loop do
+        begin
+          block.call
+          break
+        rescue ex : StopException
+          break
+        rescue ex : RetryException
+          next
+        rescue ex
+          if handler = @@exception_handler
+            begin
+              case h = handler
+              when Proc(Nil)
+                h.call
+              when Proc(Exception, Nil)
+                h.call(ex)
+              end
+            rescue ex : StopException
+              break
+            end
+            break
+          end
+        end
+      end
+    end
+  end
+
   def self.stop
     raise StopException.new
   end
