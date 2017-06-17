@@ -1,6 +1,6 @@
 # Schedule [![Build Status](https://travis-ci.org/hugoabonizio/schedule.cr.svg?branch=master)](https://travis-ci.org/hugoabonizio/schedule.cr)
 
-**Schedule** is a Crystal shard that provides a clear DSL to write periodic tasks. It has the ability to stop or retry the job whenever is necessary, with proper ways to handle exceptions. See usage examples in [examples](https://github.com/hugoabonizio/schedule.cr/tree/master/examples) folder.
+**Schedule** is a Crystal shard that provides a clear DSL to write periodic or scheduled tasks. It has the ability to stop or retry the job whenever is necessary, with proper ways to handle exceptions. See usage examples in [examples](https://github.com/hugoabonizio/schedule.cr/tree/master/examples) folder.
 
 ## Installation
 
@@ -36,6 +36,11 @@ Schedule.every(100.milliseconds) do
   end
 
   Schedule.stop if count >= MAX_VALUE
+end
+
+# Execute a task after X interval
+Schedule.after(2.seconds) do
+  puts "Hi!"
 end
 ```
 
