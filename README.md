@@ -68,6 +68,15 @@ Schedule.every(10.seconds) do
 end
 ```
 
+### Exception handlers
+
+You can use the ```Schedule.exception_handler do ... end``` form to set an exception handler or directly pass a proc to the ```Schedule.exception_handler``` class property.
+
+```crystal
+handler = ->(ex : Exception) { puts "Exception recued! #{ex.message}" }
+Schedule.exception_handler = handler
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/hugoabonizio/schedule.cr/fork )
