@@ -122,4 +122,21 @@ describe Schedule do
       flag4.should eq 2
     end
   end
+
+  context "::exception_handler" do
+    it "passes the exception to the handle" do
+      message = ""
+      Schedule.exception_handler do |ex|
+        message = ex.message
+      end
+
+      Schedule.after(100.milliseconds) do
+        raise "test"
+      end
+
+      message.should eq("")
+      sleep 110.milliseconds
+      message.should eq("test")
+    end
+  end
 end

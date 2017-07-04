@@ -5,7 +5,7 @@ module Schedule
 
   class RetryException < Exception; end
 
-  @@exception_handler : (Proc(Nil) | Proc(Exception))?
+  class_property exception_handler : (Proc(Nil) | Proc(Exception, Nil))?
 
   def self.every(interval, &block)
     spawn do
@@ -72,7 +72,11 @@ module Schedule
     raise RetryException.new
   end
 
-  def self.exception_handler(&block)
-    @@exception_handler = block
+  macro exception_handler(&block)
+    {% if block.args.size == 0 %}
+      Schedule.exception_handler = ->{ {{block.body}}; nil }
+    {% else %}
+      Schedule.exception_handler = ->({{ block.args[0] }} : Exception){ {{block.body}}; nil }
+    {% end %}
   end
 end
