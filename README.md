@@ -56,7 +56,7 @@ runner.exception_handler do |ex|
 end
 ```
 
-### Flow controw
+### Flow control
 
 A task can be stopped or retried using ```Schedule.stop``` and ```Schedule.retry``` respectively.
 
