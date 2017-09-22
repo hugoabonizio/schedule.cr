@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 describe Schedule::Runner do
-  context "::every" do
+  context "#every" do
     it "should execute every 0.1 seconds" do
       flag1 = 0
       runner = Schedule::Runner.new
@@ -90,7 +90,7 @@ describe Schedule::Runner do
     end
   end
 
-  context "::after" do
+  context "#after" do
     it "should execute after 0.1 seconds" do
       flag1 = 0
       runner = Schedule::Runner.new
@@ -151,28 +151,5 @@ describe Schedule::Runner do
       sleep 110.milliseconds
       flag4.should eq 2
     end
-
-    # it "should execute separately" do
-    #   runner1 = Schedule::Runner.new
-    #   runner2 = Schedule::Runner.new
-    #   count1 = count2 = 0
-    #   runner1.after(100.milliseconds) do
-    #     count1 += 1
-    #     Schedule.stop if count1 == 2
-    #   end
-    #   runner2.every(100.milliseconds) { count2 += 1 }
-    #   sleep 110.milliseconds
-    #   count1.should eq 1
-    #   count2.should eq 1
-    #   sleep 110.milliseconds
-    #   count1.should eq 2
-    #   count2.should eq 2
-    #   sleep 110.milliseconds
-    #   count1.should eq 2
-    #   count2.should eq 3
-    #   sleep 110.milliseconds
-    #   count1.should eq 2
-    #   count2.should eq 4
-    # end
   end
 end

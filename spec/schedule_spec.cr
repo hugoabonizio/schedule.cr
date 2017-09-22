@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 describe Schedule do
-  context "::every" do
+  context ".every" do
     it "should execute every 0.1 seconds" do
       flag1 = 0
       Schedule.every(100.milliseconds) do
@@ -63,7 +63,7 @@ describe Schedule do
     end
   end
 
-  context "::after" do
+  context ".after" do
     it "should execute after 0.1 seconds" do
       flag1 = 0
       Schedule.after(100.milliseconds) do
@@ -123,7 +123,7 @@ describe Schedule do
     end
   end
 
-  context "::exception_handler" do
+  context ".exception_handler" do
     it "passes the exception to the handle" do
       message = ""
       Schedule.exception_handler do |ex|
