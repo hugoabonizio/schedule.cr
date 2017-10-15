@@ -14,6 +14,19 @@ describe Schedule do
       flag1.should eq 2
     end
 
+    it "should execute every second is :second symbol is passed" do
+      flag1 = 0
+      Schedule.every(:second) do
+        flag1 += 1
+        Schedule.stop if flag1 >= 2
+      end
+      flag1.should eq 0
+      sleep 2.second
+      flag1.should eq 1
+      sleep 1.second
+      flag1.should eq 2
+    end
+
     it "should handles exceptions" do
       flag2 = 0
       Schedule.exception_handler do
@@ -137,6 +150,12 @@ describe Schedule do
       message.should eq("")
       sleep 110.milliseconds
       message.should eq("test")
+    end
+  end
+
+  context ".calculate_interval" do
+    it "provide time for corresponding interval" do
+      Schedule.calculate_interval(:minute).should eq 1.minute
     end
   end
 end

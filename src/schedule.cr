@@ -7,10 +7,24 @@ module Schedule
 
   class_property exception_handler : (Proc(Nil) | Proc(Exception, Nil))?
 
+  INTERVALS = {:hour   => 1.hour,
+               :minute => 1.minute,
+               :day    => 1.day,
+               :second => 1.second}
+
   def self.every(interval, &block)
     spawn do
       loop do
         sleep interval
+        run(block)
+      end
+    end
+  end
+
+  def self.every(interval : Symbol, &block)
+    spawn do
+      loop do
+        sleep calculate_interval(interval)
         run(block)
       end
     end
@@ -54,6 +68,10 @@ module Schedule
 
   def self.retry
     raise RetryException.new
+  end
+
+  def self.calculate_interval(interval : Symbol)
+    INTERVALS[interval]
   end
 
   macro exception_handler(&block)
