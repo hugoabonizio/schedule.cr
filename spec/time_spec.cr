@@ -5,12 +5,12 @@ describe Time do
     it "should change parameters based on hash" do
       current_time = Time.new
 
-      new_time current_time.change({:year   => 2016,
-                                    :month  => 5,
-                                    :day    => 3,
-                                    :hour   => 1,
-                                    :minute => 1,
-                                    :second => 1}).to_s
+      new_time = current_time.change({:year   => 2016,
+                                      :month  => 5,
+                                      :day    => 3,
+                                      :hour   => 1,
+                                      :minute => 1,
+                                      :second => 1}).to_s
 
       new_time.should eq "2016-05-03 01:01:01"
     end
