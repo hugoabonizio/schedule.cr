@@ -1,6 +1,6 @@
 struct Time
   def change(options : Hash(Symbol, Int32 | Nil))
-    current_time = Time.new
+    current_time = self
     year = options.fetch(:year, nil) || current_time.year
     month = options.fetch(:month, nil) || current_time.month
     day = options.fetch(:day, nil) || current_time.day
