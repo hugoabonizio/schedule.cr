@@ -30,6 +30,15 @@ module Schedule
     end
   end
 
+  def self.every(interval : Symbol, at : String | Array, &block)
+    spawn do
+      loop do
+        sleep calculate_interval(interval, at)
+        run(block)
+      end
+    end
+  end
+
   def self.after(interval, &block)
     delay(interval) do
       loop do
@@ -72,6 +81,42 @@ module Schedule
 
   def self.calculate_interval(interval : Symbol)
     INTERVALS[interval]
+  end
+
+  def self.calculate_interval(interval : Symbol, at : String | Array(String))
+    current_time = Time.now
+    next_day = current_time.find_next(interval)
+    next_datetime = next_time(next_day, at)
+    next_datetime = if next_datetime == next_day
+                      next_day = (next_day + 1.day).change({:hour => 0, :minute => 0, :second => 0})
+                      next_time(next_day.find_next(interval), at)
+                    else
+                      next_datetime
+                    end
+    interval = next_datetime - current_time
+  end
+
+  def self.next_time(current_time : Time, at : Array(String))
+    at = at.sort
+    return_time = ""
+    at.each do |time|
+      time_string = TimeString.new(time)
+      new_time = current_time.change(time_string.to_h)
+      if new_time > current_time
+        return new_time
+      end
+    end
+    return current_time
+  end
+
+  def self.next_time(current_time : Time, at : String)
+    time_string = TimeString.new(at)
+    new_time = current_time.change(time_string.to_h)
+    if new_time > current_time
+      return new_time
+    else
+      return current_time
+    end
   end
 
   macro exception_handler(&block)

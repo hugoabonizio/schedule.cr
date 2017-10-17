@@ -7,3 +7,7 @@ authors:
 crystal: 0.21.1
 
 license: MIT
+
+development_dependencies:
+  timecop:
+    github: TobiasGSmollett/timecop.cr
