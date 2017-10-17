@@ -10,4 +10,33 @@ struct Time
 
     Time.new(year, month, day, hour, minute, second)
   end
+
+  def find_next(day : Symbol)
+    date = self
+    loop do
+      result = case day
+               when :sunday
+                 date.sunday?
+               when :monday
+                 date.monday?
+               when :tuesday
+                 date.tuesday?
+               when :wednesday
+                 date.wednesday?
+               when :thursday
+                 date.thursday?
+               when :friday
+                 date.friday?
+               when :saturday
+                 date.saturday?
+               else
+                 raise "Undefined day of the week #{day}"
+               end
+      if result
+        return date
+      else
+        date = date + 1.day
+      end
+    end
+  end
 end
