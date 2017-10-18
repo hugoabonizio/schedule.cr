@@ -177,7 +177,7 @@ describe Schedule do
       end
 
       it "should return 3 hours when executed at 1 PM" do
-        time = Time.new(2017, 10, 15, 1, 0, 0)
+        time = Time.new(2017, 10, 15, 13, 0, 0)
         Timecop.freeze(time)
 
         Schedule.calculate_interval(:sunday, "16:00:00").to_s.should eq "03:00:00"
