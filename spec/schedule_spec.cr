@@ -159,8 +159,8 @@ describe Schedule do
       Schedule.calculate_interval(:minute).should eq 1.minute
     end
 
-    context "at 3 PM on Sunday" do
-      it "should calculate_interval(:sunday, '16:00:00') should give '01:00:00'" do
+    context ":sunday, '16:00:00')" do
+      it "should return 1 hour when executed at 3 pm on a Sunday'" do
         time = Time.new(2017, 10, 15, 15, 0, 0)
         Timecop.freeze(time)
 
@@ -168,31 +168,31 @@ describe Schedule do
       end
     end
 
-    context "5 PM on sunday" do
-      it "should calculate_interval(:sunday, '16:00:00') should give next sunday 4 PM" do
+    context ":sunday, '16:00:00'" do
+      it "should return 6 days and 23 hours when executed at 5 PM on a Sunday" do
         time = Time.new(2017, 10, 15, 17, 0, 0)
         Timecop.freeze(time)
 
         Schedule.calculate_interval(:sunday, "16:00:00").to_s.should eq "6.23:00:00"
       end
 
-      it "should calculate_interval(:sunday, '19:00:00') should give 3 hours" do
-        time = Time.new(2017, 10, 15, 17, 0, 0)
+      it "should return 3 hours when executed at 1 PM" do
+        time = Time.new(2017, 10, 15, 1, 0, 0)
         Timecop.freeze(time)
 
-        Schedule.calculate_interval(:sunday, "20:00:00").to_s.should eq "03:00:00"
+        Schedule.calculate_interval(:sunday, "16:00:00").to_s.should eq "03:00:00"
       end
     end
 
-    context ", for multiple times on the same day" do
-      it "should return the time right after current time" do
+    context ":sunday, ['16:00:00', '18:00:00']" do
+      it "should return 1 hour when scheduled at Sunday 5 PM" do
         time = Time.new(2017, 10, 15, 17, 0, 0)
         Timecop.freeze(time)
 
         Schedule.calculate_interval(:sunday, ["16:00:00", "18:00:00"]).to_s.should eq "01:00:00"
       end
 
-      it "should return the time for next week if the time slot of the day has passed" do
+      it "should return 6 days 21 hours when scheduled at Sunday 7 PM" do
         time = Time.new(2017, 10, 15, 19, 0, 0)
         Timecop.freeze(time)
 
