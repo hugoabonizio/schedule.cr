@@ -15,7 +15,7 @@ describe Schedule do
       flag1.should eq 2
     end
 
-    it "should execute every second is :second symbol is passed" do
+    it "should execute every second if :second symbol is passed" do
       flag1 = 0
       Schedule.every(:second) do
         flag1 += 1
