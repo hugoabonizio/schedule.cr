@@ -15,6 +15,8 @@ struct Time
     date = self
     loop do
       result = case day
+               when :day
+                 true
                when :sunday
                  date.sunday?
                when :monday

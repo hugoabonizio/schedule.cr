@@ -199,5 +199,44 @@ describe Schedule do
         Schedule.calculate_interval(:sunday, ["16:00:00", "18:00:00"]).to_s.should eq "6.21:00:00"
       end
     end
+
+    context ":day, at: '16:00:00'" do
+      it "should return 1 hour when scheduled at 3 PM" do
+        time = Time.new(2017, 10, 15, 15, 0, 0)
+        Timecop.freeze(time)
+
+        Schedule.calculate_interval(:day, "16:00:00").to_s.should eq "01:00:00"
+      end
+
+      it "should return 23 hour when scheduled at 5 PM" do
+        time = Time.new(2017, 10, 15, 17, 0, 0)
+        Timecop.freeze(time)
+
+        Schedule.calculate_interval(:day, "16:00:00").to_s.should eq "23:00:00"
+      end
+    end
+
+    context ":day, at: ['16:00:00', '18:00:00']" do
+      it "should return 1 hour when scheduled at 3 PM" do
+        time = Time.new(2017, 10, 15, 15, 0, 0)
+        Timecop.freeze(time)
+
+        Schedule.calculate_interval(:day, ["16:00:00", "18:00:00"]).to_s.should eq "01:00:00"
+      end
+
+      it "should return 1 hour 30 minute when scheduled at 4:30 PM" do
+        time = Time.new(2017, 10, 15, 16, 30, 0)
+        Timecop.freeze(time)
+
+        Schedule.calculate_interval(:day, ["16:00:00", "18:00:00"]).to_s.should eq "01:30:00"
+      end
+
+      it "should return 23 hour when scheduled at 9 PM" do
+        time = Time.new(2017, 10, 15, 19, 0, 0)
+        Timecop.freeze(time)
+
+        Schedule.calculate_interval(:day, "16:00:00").to_s.should eq "21:00:00"
+      end
+    end
   end
 end
