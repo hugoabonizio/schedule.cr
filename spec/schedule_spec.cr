@@ -146,14 +146,14 @@ describe Schedule do
       time = Time.new(2017, 10, 15, 15, 0, 30)
       Timecop.freeze(time)
 
-      (Schedule.calculate_interval(:minute) < 30.seconds).should be_true
+      Schedule.calculate_interval(:minute).to_f.ceil.should eq(30.seconds.to_i)
     end
 
     it "should return 19 minutes when scheduled at 2:31 PM" do
       time = Time.new(2017, 10, 15, 14, 31, 0)
       Timecop.freeze(time)
 
-      (Schedule.calculate_interval(:hour) < 29.minutes).should be_true
+      Schedule.calculate_interval(:hour).to_f.ceil.should eq(29.minutes.to_i)
     end
 
     context ":sunday, '16:00:00'" do
