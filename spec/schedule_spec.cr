@@ -15,19 +15,6 @@ describe Schedule do
       flag1.should eq 2
     end
 
-    it "should execute every second if :second symbol is passed" do
-      flag1 = 0
-      Schedule.every(:second) do
-        flag1 += 1
-        Schedule.stop if flag1 >= 2
-      end
-      flag1.should eq 0
-      sleep 2.second
-      flag1.should eq 1
-      sleep 1.second
-      flag1.should eq 2
-    end
-
     it "should handles exceptions" do
       flag2 = 0
       Schedule.exception_handler do
@@ -155,8 +142,18 @@ describe Schedule do
   end
 
   context ".calculate_interval" do
-    it "provide time for corresponding interval" do
-      Schedule.calculate_interval(:minute).should eq 1.minute
+    it "should return 30 seconds when scheduled at 30th second of a minute" do
+      time = Time.new(2017, 10, 15, 15, 0, 30)
+      Timecop.freeze(time)
+
+      (Schedule.calculate_interval(:minute) < 30.seconds).should be_true
+    end
+
+    it "should return 19 minutes when scheduled at 2:31 PM" do
+      time = Time.new(2017, 10, 15, 14, 31, 0)
+      Timecop.freeze(time)
+
+      (Schedule.calculate_interval(:hour) < 29.minutes).should be_true
     end
 
     context ":sunday, '16:00:00')" do

@@ -5,12 +5,9 @@ module Schedule
 
   class RetryException < Exception; end
 
-  class_property exception_handler : (Proc(Nil) | Proc(Exception, Nil))?
+  class InvalidTimeException < Exception; end
 
-  INTERVALS = {:hour   => 1.hour,
-               :minute => 1.minute,
-               :day    => 1.day,
-               :second => 1.second}
+  class_property exception_handler : (Proc(Nil) | Proc(Exception, Nil))?
 
   def self.every(interval, &block)
     spawn do
@@ -80,7 +77,17 @@ module Schedule
   end
 
   def self.calculate_interval(interval : Symbol)
-    INTERVALS[interval]
+    now = Time.now
+    case interval
+    when :minute
+      now.at_end_of_minute - now
+    when :hour
+      now.at_end_of_hour - now
+    when :day
+      now.at_end_of_day - now
+    else
+      raise InvalidTimeException.new
+    end
   end
 
   def self.calculate_interval(interval : Symbol, at : String | Array(String))
