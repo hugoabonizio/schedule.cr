@@ -4,11 +4,11 @@ class TimeString
     @time_array = @time.split(":")
   end
 
-  def to_h
+  def to_tuple
     {
-      :hour   => get_hour,
-      :minute => get_minute,
-      :second => get_second,
+      hour:   get_hour,
+      minute: get_minute,
+      second: get_second,
     }
   end
 
