@@ -156,7 +156,7 @@ describe Schedule do
       (Schedule.calculate_interval(:hour) < 29.minutes).should be_true
     end
 
-    context ":sunday, '16:00:00')" do
+    context ":sunday, '16:00:00'" do
       it "should return 1 hour when executed at 3 pm on a Sunday'" do
         time = Time.new(2017, 10, 15, 15, 0, 0)
         Timecop.freeze(time)

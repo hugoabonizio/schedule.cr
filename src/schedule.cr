@@ -114,17 +114,14 @@ module Schedule
         return new_time
       end
     end
-    return current_time
+    current_time
   end
 
   def self.next_time(current_time : Time, at : String)
     time_string = TimeString.new(at)
     new_time = current_time.change(**time_string.to_tuple)
-    if new_time > current_time
-      return new_time
-    else
-      return current_time
-    end
+    return new_time if new_time > current_time
+    current_time
   end
 
   macro exception_handler(&block)
