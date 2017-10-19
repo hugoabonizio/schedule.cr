@@ -1,3 +1,4 @@
+require "./schedule/ext/*"
 require "./schedule/*"
 
 module Schedule

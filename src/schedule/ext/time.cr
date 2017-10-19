@@ -33,11 +33,8 @@ struct Time
                else
                  raise "Undefined day of the week #{day}"
                end
-      if result
-        return date
-      else
-        date = date + 1.day
-      end
+      return date if result
+      date = date + 1.day
     end
   end
 end
