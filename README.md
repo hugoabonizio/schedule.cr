@@ -45,6 +45,30 @@ end
 Schedule.after(2.seconds) do
   puts "Hi!"
 end
+
+# Schedule task every day at a particular time
+
+Schedule.every(:day, "16:00:00") do
+  puts "Good Afternoon!"
+end
+
+# Schedule task to run multiple time every day
+
+Schedule.every(:day, ["16:00:00", "18:00:00"]) do
+  puts "Greetings!"
+end
+
+# Schedule task to run a particular time at particular day of the week
+
+Schedule.every(:sunday, "16:00:00") do
+  puts "House Keeping"
+end
+
+# Schedule task to run multiple time on a given day
+Schedule.every(:sunday, ["16:00:00", "18:00:00"] do
+  puts "Greetings!"
+end
+
 ```
 
 #### Scheduled tasks can be isolated having its own runner:
