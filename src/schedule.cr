@@ -81,11 +81,11 @@ module Schedule
     now = Time.now
     case interval
     when :minute
-      now.at_end_of_minute - now
+      now.at_end_of_minute - now + 1.millisecond
     when :hour
-      now.at_end_of_hour - now
+      now.at_end_of_hour - now + 1.millisecond
     when :day
-      now.at_end_of_day - now
+      now.at_end_of_day - now + 1.millisecond
     else
       raise InvalidTimeException.new
     end
