@@ -101,12 +101,11 @@ module Schedule
                     else
                       next_datetime
                     end
-    interval = next_datetime - current_time
+    next_datetime - current_time
   end
 
   def self.next_time(current_time : Time, at : Array(String))
     at = at.sort
-    return_time = ""
     at.each do |time|
       time_string = TimeString.new(time)
       new_time = current_time.change(**time_string.to_tuple)
