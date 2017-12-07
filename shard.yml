@@ -1,10 +1,10 @@
 name: schedule
-version: 0.1.0
+version: 0.2.0
 
 authors:
   - Hugo Abonizio <hugo_abonizio@hotmail.com>
 
-crystal: 0.21.1
+crystal: 0.23.1
 
 license: MIT
 
