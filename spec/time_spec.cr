@@ -10,7 +10,7 @@ describe Time do
         day: 3,
         hour: 1,
         minute: 1,
-        second: 1).to_s
+        second: 1).to_s("%F %H:%M:%S %:z")
 
       new_time.should eq "2016-05-03 01:01:01 #{current_time.zone.format}"
     end
