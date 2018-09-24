@@ -12,7 +12,7 @@ describe Time do
         minute: 1,
         second: 1).to_s
 
-      new_time.should eq "2016-05-03 01:01:01"
+      new_time.should eq "2016-05-03 01:01:01 #{current_time.zone.format}"
     end
 
     it "should change just the parameters passed based on hash" do
