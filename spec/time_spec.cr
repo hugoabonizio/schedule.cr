@@ -3,7 +3,7 @@ require "./spec_helper"
 describe Time do
   context ".change" do
     it "should change parameters based on hash" do
-      current_time = Time.new
+      current_time = Time.local
 
       new_time = current_time.change(year: 2016,
         month: 5,
@@ -16,14 +16,14 @@ describe Time do
     end
 
     it "should change just the parameters passed based on hash" do
-      current_time = Time.new
+      current_time = Time.local
 
       current_time.change(year: 2016).year.should eq 2016
       current_time.change(year: 2016).minute.should eq current_time.minute
     end
 
     it "should change the self object" do
-      time = Time.new(2016, 1, 1, 1, 1, 1)
+      time = Time.local(2016, 1, 1, 1, 1, 1)
 
       time = time.change(**{hour: 0, minute: 0, second: 0})
 

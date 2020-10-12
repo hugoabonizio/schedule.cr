@@ -143,14 +143,14 @@ describe Schedule do
 
   context ".calculate_interval" do
     it "should return 30 seconds when scheduled at 30th second of a minute" do
-      time = Time.new(2017, 10, 15, 15, 0, 30)
+      time = Time.local(2017, 10, 15, 15, 0, 30)
       Timecop.freeze(time) do
         Schedule.calculate_interval(:minute).to_f.ceil.should eq(30.seconds.to_i)
       end
     end
 
     it "should return 19 minutes when scheduled at 2:31 PM" do
-      time = Time.new(2017, 10, 15, 14, 31, 0)
+      time = Time.local(2017, 10, 15, 14, 31, 0)
       Timecop.freeze(time) do
         Schedule.calculate_interval(:hour).to_f.ceil.should eq(29.minutes.to_i)
       end
@@ -158,7 +158,7 @@ describe Schedule do
 
     context ":sunday, '16:00:00'" do
       it "should return 1 hour when executed at 3 pm on a Sunday'" do
-        time = Time.new(2017, 10, 15, 15, 0, 0)
+        time = Time.local(2017, 10, 15, 15, 0, 0)
         Timecop.freeze(time) do
           Schedule.calculate_interval(:sunday, "16:00:00").to_s.should eq "01:00:00"
         end
@@ -167,14 +167,14 @@ describe Schedule do
 
     context ":sunday, '16:00:00'" do
       it "should return 6 days and 23 hours when executed at 5 PM on a Sunday" do
-        time = Time.new(2017, 10, 15, 17, 0, 0)
+        time = Time.local(2017, 10, 15, 17, 0, 0)
         Timecop.freeze(time) do
           Schedule.calculate_interval(:sunday, "16:00:00").to_s.should eq "6.23:00:00"
         end
       end
 
       it "should return 3 hours when executed at 1 PM" do
-        time = Time.new(2017, 10, 15, 13, 0, 0)
+        time = Time.local(2017, 10, 15, 13, 0, 0)
         Timecop.freeze(time) do
           Schedule.calculate_interval(:sunday, "16:00:00").to_s.should eq "03:00:00"
         end
@@ -183,14 +183,14 @@ describe Schedule do
 
     context ":sunday, ['16:00:00', '18:00:00']" do
       it "should return 1 hour when scheduled at Sunday 5 PM" do
-        time = Time.new(2017, 10, 15, 17, 0, 0)
+        time = Time.local(2017, 10, 15, 17, 0, 0)
         Timecop.freeze(time) do
           Schedule.calculate_interval(:sunday, ["16:00:00", "18:00:00"]).to_s.should eq "01:00:00"
         end
       end
 
       it "should return 6 days 21 hours when scheduled at Sunday 7 PM" do
-        time = Time.new(2017, 10, 15, 19, 0, 0)
+        time = Time.local(2017, 10, 15, 19, 0, 0)
         Timecop.freeze(time) do
           Schedule.calculate_interval(:sunday, ["16:00:00", "18:00:00"]).to_s.should eq "6.21:00:00"
         end
@@ -199,14 +199,14 @@ describe Schedule do
 
     context ":day, at: '16:00:00'" do
       it "should return 1 hour when scheduled at 3 PM" do
-        time = Time.new(2017, 10, 15, 15, 0, 0)
+        time = Time.local(2017, 10, 15, 15, 0, 0)
         Timecop.freeze(time) do
           Schedule.calculate_interval(:day, "16:00:00").to_s.should eq "01:00:00"
         end
       end
 
       it "should return 23 hour when scheduled at 5 PM" do
-        time = Time.new(2017, 10, 15, 17, 0, 0)
+        time = Time.local(2017, 10, 15, 17, 0, 0)
         Timecop.freeze(time) do
           Schedule.calculate_interval(:day, "16:00:00").to_s.should eq "23:00:00"
         end
@@ -215,21 +215,21 @@ describe Schedule do
 
     context ":day, at: ['16:00:00', '18:00:00']" do
       it "should return 1 hour when scheduled at 3 PM" do
-        time = Time.new(2017, 10, 15, 15, 0, 0)
+        time = Time.local(2017, 10, 15, 15, 0, 0)
         Timecop.freeze(time) do
           Schedule.calculate_interval(:day, ["16:00:00", "18:00:00"]).to_s.should eq "01:00:00"
         end
       end
 
       it "should return 1 hour 30 minute when scheduled at 4:30 PM" do
-        time = Time.new(2017, 10, 15, 16, 30, 0)
+        time = Time.local(2017, 10, 15, 16, 30, 0)
         Timecop.freeze(time) do
           Schedule.calculate_interval(:day, ["16:00:00", "18:00:00"]).to_s.should eq "01:30:00"
         end
       end
 
       it "should return 23 hour when scheduled at 9 PM" do
-        time = Time.new(2017, 10, 15, 19, 0, 0)
+        time = Time.local(2017, 10, 15, 19, 0, 0)
         Timecop.freeze(time) do
           Schedule.calculate_interval(:day, "16:00:00").to_s.should eq "21:00:00"
         end

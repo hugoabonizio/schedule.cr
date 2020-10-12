@@ -7,7 +7,7 @@ struct Time
     hour ||= current_time.hour
     minute ||= current_time.minute
     second ||= current_time.second
-    Time.new(year, month, day, hour, minute, second)
+    Time.local(year, month, day, hour, minute, second)
   end
 
   def find_next(day : Symbol)
