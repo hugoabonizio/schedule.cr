@@ -78,7 +78,7 @@ module Schedule
   end
 
   def self.calculate_interval(interval : Symbol)
-    now = Time.now
+    now = Time.local
     case interval
     when :minute
       now.at_end_of_minute - now
@@ -92,7 +92,7 @@ module Schedule
   end
 
   def self.calculate_interval(interval : Symbol, at : String | Array(String))
-    current_time = Time.now
+    current_time = Time.local
     next_day = current_time.find_next(interval)
     next_datetime = next_time(next_day, at)
     next_datetime = if next_datetime == next_day
