@@ -1,3 +1,5 @@
+require "future"
+
 module Schedule
   class Runner
     @exception_handler : (Proc(Nil) | Proc(Exception))?
