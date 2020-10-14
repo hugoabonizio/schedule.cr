@@ -16,7 +16,7 @@ jobs:
     steps:
       - run: crystal --version
       - checkout
-      - run: shards
+      - run: shards --ignore-crystal-version
       - run: crystal spec
 
 workflows:
